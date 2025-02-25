@@ -35,7 +35,7 @@ function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//2. setDelay(difficulty)
+//2. setting the delay based on user's preferred difficulty
 function setDelay(difficulty) {
   if(difficulty === hard) {
     randomInteger(600, 1200);
@@ -47,10 +47,6 @@ function setDelay(difficulty) {
 }}
 
 //3. selecting a random hole
-function randomInteger(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function chooseHole(holes) {
   const index = randomInteger(0, 2);
   const hole = holes[index];
@@ -60,39 +56,6 @@ function chooseHole(holes) {
   lastHole = hole;
   return hole;
 }
-
-/*TEST FUNCTION CHOOSEHOLE
-let hole1 = chooseHole(holes);
-
-hole1.classList.toggle("highlight");
-console.log(hole1.innerHTML);
-console.log(hole1.classList);
-
-hole1 = chooseHole(holes);
-hole1.classList.toggle("highlight");
-console.log(hole1.innerHTML);
-console.log(hole1.classList);
-*/
-
-//Calls the showUp function if time > 0 and stops the game if time = 0.
-/*
-* The purpose of this function is simply to determine if the game should
-* continue or stop. The game continues if there is still time `if(time > 0)`.
-* If there is still time then `showUp()` needs to be called again so that
-* it sets a different delay and a different hole. If there is no more time
-* then it should call the `stopGame()` function. The function also needs to
-* return the timeoutId if the game continues or the string "game stopped"
-* if the game is over.
-*/
-  
-/*  if time > 0:
-  *  //   timeoutId = showUp()
-  *  //   return timeoutId
-  *  // else
-  *  //   gameStopped = stopGame()
-  *  //   return gameStopped
-*/
-
 
 //------------------------GAME FLOW---------------------//
 //4. determine if game should continue/stop
@@ -203,6 +166,15 @@ function startGame(){
   setEventListeners();
   startTimer();
   showUp();
+  whack(event);
+  updateTimer();
+  updateScore();
+  toggleVisibility();
+  showAndHide();
+  gameOver();
+  chooseHole();
+  randomInteger();
+  setDelay();
   return "game started";
 }
 
