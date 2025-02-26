@@ -6,26 +6,10 @@ const score = document.querySelector('#score');
 const timerDisplay = document.querySelector('#timerDisplay');
 
 let time = 0;
-let timer;
+let timer = 0;
 let lastHole = 0;
 let points = 0;
 let difficulty = "hard";
-
-
-const http = require('http');
-
-const hostname = '127.0.0.1';
-const port = 3000;
-
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content Type', 'text/plain');
-  res.end('Hello World');
-});
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
 
 
 //------------BASIC GAME FUNCTIONALITY: RANDOMNESS--------//
@@ -35,20 +19,28 @@ function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+//1. test
+//let test1 = randomInteger(0, 8);
+//console.log(randomNumber);
+
 //2. setting the delay based on user's preferred difficulty
 function setDelay(difficulty) {
-  if(difficulty === hard) {
-    randomInteger(600, 1200);
-  if (difficulty === normal) {
-    return 1000;
-  } if (difficulty === easy) {
+  if (difficulty === "easy") {
     return 1500;
-  } 
-}}
+  } if (difficulty === "normal") {
+    return 1000;
+  } if (difficulty === "hard") {
+    return randomInteger(600, 1200);
+  } else ("please choose a difficulty setting");
+}
+
+//2. test
+//let test2 = setDelay("hard");
+//console.log(another);
 
 //3. selecting a random hole
 function chooseHole(holes) {
-  const index = randomInteger(0, 2);
+  const index = randomInteger(0, holes.length -1);
   const hole = holes[index];
   if (hole === lastHole) {
     return chooseHole(holes);
@@ -56,6 +48,10 @@ function chooseHole(holes) {
   lastHole = hole;
   return hole;
 }
+
+//3. test
+//let test3 = chooseHole(holes);
+//console.log(test3);
 
 //------------------------GAME FLOW---------------------//
 //4. determine if game should continue/stop
@@ -70,12 +66,18 @@ function gameOver() {
   return gameStopped;
 }
 
+//let test4 = gameOver();
+//console.log(test4);
+
 //3. call showAndHide function
 function showUp() {
-  let delay = setDelay();
-  const hole = chooseHole();
+  let delay = setDelay(difficulty);
+  const hole = chooseHole(holes);
   return showAndHide(hole, delay);
 }
+
+//let test5 = showUp();
+//console.log(test5);
 
 //2. show/hide mole given delay time/hole where mole is at
 function showAndHide(hole, delay) {
@@ -88,6 +90,9 @@ function showAndHide(hole, delay) {
   return timeoutID;
 }
 
+//let test6 = showAndHide(hole, delay);
+//console.log(test6);
+
 //1. adds/removes 'show' class from style.css & return hole
 function toggleVisibility(hole) {
   hole.classList.toggle('show'); 
@@ -98,7 +103,6 @@ showUp();
 
 //--------------------------WHACK!-----------------------//
 //--------------------------TIMER------------------------//
-
 //WHACK: 1. increment global points variable/update scoreboard
 function updateScore() {
   points ++;
@@ -131,9 +135,9 @@ function startTimer() {
 
 //WHACK: 3. event handler that calls updateScore() to increment score if mole was clicked by player
 function whack(event) {
-  mole.addEventListener('click', whack);
-  updateScore();
-  return points;
+  if (event.target.classList.contains('mole')) {
+    return points;
+  }
 }
 
 //WHACK: 4. event handler gets called when player clicks a mole
@@ -153,7 +157,7 @@ function setDuration(duration) {
 
 //TIMER: 4. when game is stopped the timer gets cleared
 function stopGame(){
-  stopAudio(song); 
+  //stopAudio(song); 
   clearInterval(timer);
   return "game stopped";
 }
