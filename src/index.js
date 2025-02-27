@@ -107,7 +107,7 @@ showUp();
 function updateScore() {
   points ++;
   score.textContent = points;
-  return points;
+  return score;
 }
 
 //WHACK: 2. resets scoreboard to 0 so player can play again
@@ -137,7 +137,7 @@ startTimer();
 //WHACK: 3. event handler that calls updateScore() to increment score if mole was clicked by player
 function whack(event) {
   if (event.target.classList.contains('mole')) {
-    return points;
+    updateScore();
   }
 }
 
