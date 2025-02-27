@@ -3,10 +3,10 @@ const holes = document.querySelectorAll('.hole');
 const moles = document.querySelectorAll('.mole');
 const startButton = document.querySelector('#start');
 const score = document.querySelector('#score');
-const timerDisplay = document.querySelector('#timerDisplay');
+const timerDisplay = document.querySelector('#timer');
 
-let time = 0;
-let timer = 0;
+let time = 10;;
+let timer;
 let lastHole = 0;
 let points = 0;
 let difficulty = "hard";
@@ -132,6 +132,7 @@ function startTimer() {
   return timer;
 }
 
+startTimer();
 
 //WHACK: 3. event handler that calls updateScore() to increment score if mole was clicked by player
 function whack(event) {
