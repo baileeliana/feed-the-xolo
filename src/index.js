@@ -57,13 +57,13 @@ function chooseHole(holes) {
 //4. determine if game should continue/stop
 function gameOver() {
   if (time > 0) {
-    timeoutId = showUp();
+    let timeoutId = showUp();
     return timeoutId
   }
   else {
-    gameStopped = stopGame();
-  }
+    let gameStopped = stopGame();
   return gameStopped;
+  }
 }
 
 //let test4 = gameOver();
@@ -157,10 +157,32 @@ function setDuration(duration) {
 
 //TIMER: 4. when game is stopped the timer gets cleared
 function stopGame(){
-  //stopAudio(song); 
+  stopAudio(song); 
   clearInterval(timer);
   return "game stopped";
 }
+
+//-------------------------AUDIO----------------------------//
+const audioHit = new Audio("https://github.com/baileeliana/feed-the-xolo/blob/main/assets/hit.mp3?raw=true");
+const song = new Audio("https://github.com/baileeliana/feed-the-xolo/blob/main/assets/molesong.mp3?raw=true");
+
+function playAudio(audioObject) {
+  audioObject.play();
+}
+
+function loopAudio(audioObject) {
+  audioObject.loop = true;
+  playAudio(audioObject);
+}
+
+function stopAudio(audioObject) {
+  audioObject.pause();
+}
+
+function play(){
+  playAudio(song);
+}
+
 
 //----------------------START GAME-----------------------//
 function startGame(){
@@ -179,6 +201,10 @@ function startGame(){
   chooseHole();
   randomInteger();
   setDelay();
+  playAudio(audioObject);
+  loopAudio(audioObject);
+  stopAudio(audioObject);
+  play();
   return "game started";
 }
 
