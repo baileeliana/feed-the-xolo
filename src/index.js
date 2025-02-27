@@ -182,8 +182,10 @@ function stopAudio(audioObject) {
 
 function play(){
   playAudio(song);
+  loopAudio();
 }
 
+play();
 
 //----------------------START GAME-----------------------//
 function startGame(){
@@ -202,9 +204,6 @@ function startGame(){
   chooseHole();
   randomInteger();
   setDelay();
-  playAudio(audioObject);
-  loopAudio(audioObject);
-  stopAudio(audioObject);
   play();
   return "game started";
 }
