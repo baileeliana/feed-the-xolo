@@ -4,6 +4,7 @@ const moles = document.querySelectorAll('.mole');
 const startButton = document.querySelector('#start');
 const score = document.querySelector('#score');
 const timerDisplay = document.querySelector('#timer');
+const cursor = document.querySelector('#myCursor');
 
 let time = 10;;
 let timer;
@@ -99,8 +100,6 @@ function toggleVisibility(hole) {
   return hole;
 }
 
-showUp();
-
 //--------------------------WHACK!-----------------------//
 //--------------------------TIMER------------------------//
 //WHACK: 1. increment global points variable/update scoreboard
@@ -132,12 +131,11 @@ function startTimer() {
   return timer;
 }
 
-startTimer();
-
 //WHACK: 3. event handler that calls updateScore() to increment score if mole was clicked by player
 function whack(event) {
   if (event.target.classList.contains('mole')) {
     updateScore();
+    document.getElementById('grid').style.cursor = 'url("https://github.com/baileeliana/feed-the-xolo/blob/main/assets/bone.png?raw=true"), auto';
   }
 }
 
@@ -182,11 +180,9 @@ function stopAudio(audioObject) {
 
 function play(){
   playAudio(song);
-  loopAudio();
 }
 
 play();
-
 //----------------------START GAME-----------------------//
 function startGame(){
   clearScore();
@@ -195,17 +191,7 @@ function startGame(){
   setEventListeners();
   startTimer();
   showUp();
-  whack();
-  updateTimer();
-  updateScore();
-  toggleVisibility();
-  showAndHide();
-  gameOver();
-  chooseHole();
-  randomInteger();
-  setDelay();
   play();
-  return "game started";
 }
 
 startButton.addEventListener("click", startGame);
